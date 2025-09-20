@@ -6,6 +6,7 @@ import {
   updatePasswordFormSchemaType,
 } from "@/schemas/update-password.schema";
 import { formStateType, formValuesType } from "@/types/form.type";
+import { getMyToken } from "@/utilities/token";
 import z from "zod";
 
 export async function handleChangePassword(
@@ -17,7 +18,7 @@ export async function handleChangePassword(
     password: formData.get("password"),
     rePassword: formData.get("rePassword"),
   };
-  const token = await getUserToken();
+  const token = await getMyToken();
 
   const parsedData = updatePasswordFormSchema.safeParse(formValues);
   if (!parsedData.success) {
