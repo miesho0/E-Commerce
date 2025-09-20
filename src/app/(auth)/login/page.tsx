@@ -43,6 +43,7 @@ export default function LoginPage() {
       router.push(res.url || "/");
       router.refresh(); 
     } else if (res?.error) {
+      // console.log(res)
       toast.error("Invalid email or password",{
         position: "top-center",
         duration: 2000,
