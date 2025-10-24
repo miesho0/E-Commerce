@@ -3,8 +3,14 @@ import { NextResponse, NextRequest } from 'next/server'
 
 
 export async function middleware(request: NextRequest) {
+     const cookieName =
+    process.env.NODE_ENV === "production"
+      ? "__Secure-next-auth.session-token"
+      : "next-auth.session-token";
+  const token = await getToken({ req: request, cookieName });
+ 
 
-    const token = await getToken({ req: request });
+    // const token = await getToken({ req: request });
     const { pathname } = request.nextUrl;
     const authPage = ['/login', '/register'];
     const routes = ["/", "/home", "/cart", "/wishlist",  "/payment" ,  "/products", "/categories" , "/allorders" , "/brands", "/productdetails" , "/password" , "/change-password"  , "/checkout"]
