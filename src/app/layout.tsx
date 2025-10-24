@@ -25,16 +25,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.className}  antialiased`} suppressHydrationWarning={true}>
-            <Providers>
-              <Navbar />
-              <Toaster />
-              <main >{children}</main>
-              <Footer />
-            </Providers>
-       
-      </body>
+    <body
+  className={`${poppins.className} antialiased flex flex-col min-h-screen`}
+  suppressHydrationWarning={true}
+>
+  <Providers>
+    <Navbar />
+    <Toaster />
+    <main className="flex-1">{children}</main>
+    <Footer />
+  </Providers>
+</body>
+
     </html>
   );
 }
