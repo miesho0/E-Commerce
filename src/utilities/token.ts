@@ -21,7 +21,7 @@ import { cookies } from "next/headers";
 
 export async function getMyToken() {
   const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("next-auth.session-token")?.value;
+  const sessionCookie = cookieStore.get("next-auth.session-token")?.value||cookieStore.get("__Secure-next-auth.session-token")?.value;
   
   if (!sessionCookie) return null;
 
