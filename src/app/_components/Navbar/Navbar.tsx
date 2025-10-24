@@ -327,6 +327,7 @@ export default function Navbar() {
                   <Badge className="absolute -top-2 -right-3 bg-green-600 text-white">{numOfCart}</Badge>
                 )}
               </Link>
+              
 
               {/* User Dropdown (Desktop Only) */}
               <div className="hidden md:flex">
