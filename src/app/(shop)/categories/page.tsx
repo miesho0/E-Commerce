@@ -16,13 +16,14 @@ export default async function CategoriesPage() {
   href={`/categoriesdetails/${cat._id}`} 
   className="flex flex-col items-center p-4 border rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition"
 >
+<div className="relative w-full aspect-square overflow-hidden rounded-lg">
   <Image
     src={cat.image}
     alt={cat.name}
-    width={200}
-    height={200}
-    className="rounded-lg object-cover"
+    fill
+    className="object-cover"
   />
+</div>
   <h2 className="mt-3 text-center font-medium text-lg">{cat.name}</h2>
 </Link>
       ))}
