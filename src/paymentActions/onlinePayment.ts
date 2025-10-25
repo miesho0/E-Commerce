@@ -1,62 +1,24 @@
-// "use server";
-
-// import { getMyToken } from "@/utilities/token";
-// import axios from "axios";
-
-
-
-//  export async function onlinePaymentAction(id:string , values : object){
-
-//     const token = await getMyToken()
-
-//     if (!token){
-//         throw Error ("Login First")
-//     }
-
-//     const { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}? url=http://localhost:3000`, {
-//       shippingAddress: values  
-//     },{
-//         headers:{
-//             token : token as string
-//         }
-//     })
-//     return data
-//  }
-
 "use server";
 
 import { getMyToken } from "@/utilities/token";
 import axios from "axios";
 
-export async function onlinePaymentAction(id: string, values: object) {
-  const token = await getMyToken();
 
-  if (!token) {
-    throw Error("Login First");
-  }
 
-  // ✅ Use environment variable for base URL
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+ export async function onlinePaymentAction(id:string , values : object){
 
-  // const { data } = await axios.post(
-  //   `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=${baseUrl}`,
-  //   { shippingAddress: values },
-  //   {
-  //     headers: {
-  //       token: token as string,
-  //     },
-  //   }
-  // );
-    const { data } = await axios.post(
-    `https://ecommerce.routemisr.com/api/v1/orders/${id}?url=${encodeURIComponent(baseUrl)}`,
-    { shippingAddress: values },
-    {
-      headers: { 
-        token: token as string,
-      },
+    const token = await getMyToken()
+
+    if (!token){
+        throw Error ("Login First")
     }
-  );
 
-  return data;
-}
+    const { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}? url=http://localhost:3000`, {
+      shippingAddress: values  
+    },{
+        headers:{
+            token : token as string
+        }
+    })
+    return data
+ }

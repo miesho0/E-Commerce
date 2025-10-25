@@ -75,8 +75,8 @@ const { cartId, products, ClearCart } = useContext(cartContext);
         duration: 3000,
         position: "top-center",
       });
-       ClearCart();
-      router.push("/allorders")
+      //  ClearCart();
+      // router.push("/allorders")
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Something went wrong", {
         duration: 3000,
