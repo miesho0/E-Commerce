@@ -52,7 +52,7 @@ export async function onlinePaymentAction(id: string, values: object) {
     `https://ecommerce.routemisr.com/api/v1/orders/${id}?url=${encodeURIComponent(baseUrl)}`,
     { shippingAddress: values },
     {
-      headers: { \
+      headers: { 
         token: token as string,
       },
     }
