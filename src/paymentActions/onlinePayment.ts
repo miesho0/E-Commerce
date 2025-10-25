@@ -13,12 +13,21 @@ import axios from "axios";
         throw Error ("Login First")
     }
 
-    const { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}? url=http://localhost:3000`, {
-      shippingAddress: values  
-    },{
-        headers:{
-            token : token as string
-        }
-    })
+    // const { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}? url=http://localhost:3000`, {
+    //   shippingAddress: values  
+    // },{
+    //     headers:{
+    //         token : token as string
+    //     }
+    // })
+      const { data } = await axios.post(
+    `https://ecommerce.routemisr.com/api/v1/orders/${id}?url=${encodeURIComponent(baseUrl)}`,
+    { shippingAddress: values },
+    {
+      headers: {
+        token: token as string,
+      },
+    }
+  );
     return data
  }
