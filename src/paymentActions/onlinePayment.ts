@@ -39,8 +39,17 @@ export async function onlinePaymentAction(id: string, values: object) {
   const baseUrl =
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  const { data } = await axios.post(
-    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=${baseUrl}`,
+  // const { data } = await axios.post(
+  //   `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=${baseUrl}`,
+  //   { shippingAddress: values },
+  //   {
+  //     headers: {
+  //       token: token as string,
+  //     },
+  //   }
+  // );
+    const { data } = await axios.post(
+    `https://ecommerce.routemisr.com/api/v1/orders/${id}?url=${encodeURIComponent(baseUrl)}`,
     { shippingAddress: values },
     {
       headers: {
