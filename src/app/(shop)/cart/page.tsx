@@ -19,7 +19,7 @@ const Cart = () => {
       if (data.status === "success") {
             toast.success("Remove product successfully ", {
                 duration: 2000,
-                position: "top-right",
+                position: "top-center",
                 style: {
                     background: "green",
                     color: "white",
@@ -30,7 +30,7 @@ const Cart = () => {
         } else {
             toast.error("Failed to remove product from cart", {
                 duration: 2000,
-                position: "top-right",
+                position: "top-center",
                 style: {
                     background: "red",
                     color: "white",

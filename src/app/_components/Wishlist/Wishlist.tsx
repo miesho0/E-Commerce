@@ -23,7 +23,7 @@ export default function WishlistButton({ product }: { product: Product }) {
 
         toast.success("Removed from wishlist", {
           duration: 2000,
-          position: "top-right",
+          position: "top-center",
           style: {
             background: "green",
             color: "white",
@@ -35,7 +35,7 @@ export default function WishlistButton({ product }: { product: Product }) {
 
         toast.success("Added to wishlist", {
           duration: 2000,
-          position: "top-right",
+          position: "top-center",
           style: {
             background: "green",
             color: "white",
