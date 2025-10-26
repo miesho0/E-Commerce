@@ -2,14 +2,18 @@
 import Loading from '@/app/loading'
 import { cartContext } from '@/Context/CartContext'
 import { Product } from '@/types/product.type'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Image from 'next/image'
 import { toast } from 'sonner'
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 const WishlistPage: React.FC = () => {
-  const { isloading, wishlistProducts, wishlistCount, removeFromWishlist } = useContext(cartContext) as any;
+  const { isloading, wishlistProducts, wishlistCount, removeFromWishlist , getWishlist } = useContext(cartContext) as any;
+    useEffect(() => {
+    // 🔁 كل مرة الصفحة تفتح، يجيب آخر تحديث من السيرفر أو localStorage
+    getWishlist && getWishlist();
+  }, []);
 
   async function removeItem(id: string) {
     const data = await removeFromWishlist(id);
