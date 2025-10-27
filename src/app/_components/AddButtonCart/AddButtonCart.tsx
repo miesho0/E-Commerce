@@ -18,7 +18,7 @@ export default function AddButtonCart({ id, classname }: { id: string; classname
         if (data.status === "success") {
             toast.success(data.message, {
                 duration: 2000,
-                position: "top-right",
+                position: "top-center",
                 style: {
                     background: "green",
                     color: "white",
@@ -29,7 +29,7 @@ export default function AddButtonCart({ id, classname }: { id: string; classname
         } else {
             toast.error("Failed to add product to cart", {
                 duration: 2000,
-                position: "top-right",
+                position: "top-center",
                 style: {
                     background: "green",
                     color: "white",
