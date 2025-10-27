@@ -18,7 +18,7 @@ export  default function PaymentPage() {
 const { cartId, products, ClearCart } = useContext(cartContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+const [selected, setSelected] = useState<"cash" | "online" | null>(null);
   const form = useForm<PaymentSchemaType>({
      defaultValues:{
         details: "",
@@ -90,120 +90,272 @@ const { cartId, products, ClearCart } = useContext(cartContext);
 
     // if (loading) return <Loading />
   if (products.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[100vh]">
-        <div className="bg-white shadow-lg rounded-2xl p-10 text-center max-w-md">
-          <i className="fa-solid fa-cart-shopping text-gray-400 text-6xl mb-4"></i>
-          <h1 className="text-2xl font-bold text-gray-700 mb-2">Your Cart is Empty</h1>
-          <p className="text-gray-500 mb-6">Looks like you haven’t added anything yet</p>
-        </div>
-      </div>
-    )
-  }
+  //   return (
+  //     <div className="flex flex-col items-center justify-center h-[100vh]">
+  //       <div className="bg-white shadow-lg rounded-2xl p-10 text-center max-w-md">
+  //         <i className="fa-solid fa-cart-shopping text-gray-400 text-6xl mb-4"></i>
+  //         <h1 className="text-2xl font-bold text-gray-700 mb-2">Your Cart is Empty</h1>
+  //         <p className="text-gray-500 mb-6">Looks like you haven’t added anything yet</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
-  return (
-    <div className="relative mt-20">
-      {loading && (
-        <div className="fixed inset-0 flex justify-center items-center bg-gray-400 opacity-70 ">
-          <i className="fa-solid fa-spinner fa-spin fa-7x text-white"></i>
-        </div>
-      )}
+  // return (
+  //   <div className="relative mt-20">
+  //     {loading && (
+  //       <div className="fixed inset-0 flex justify-center items-center bg-gray-400 opacity-70 ">
+  //         <i className="fa-solid fa-spinner fa-spin fa-7x text-white"></i>
+  //       </div>
+  //     )}
 
 
 
-      <div className="mx-auto container my-3 px-2 md:px-5">
-        <h2 className="mb-10 font-semibold text-2xl">Order now</h2>
+  //     <div className="mx-auto container my-3 px-2 md:px-5">
+  //       <h2 className="mb-10 font-semibold text-2xl">Order now</h2>
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(cashPayment)}
-            className="space-y-2"
-          >
-            <FormField
-              control={form.control}
-              name="details"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Details</FormLabel>
-                  <FormControl>
-                    <Input type="text" {...field} />
-                  </FormControl>
-                  <FormDescription />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+  //       <Form {...form}>
+  //         <form
+  //           onSubmit={form.handleSubmit(cashPayment)}
+  //           className="space-y-2"
+  //         >
+  //           <FormField
+  //             control={form.control}
+  //             name="details"
+  //             render={({ field }) => (
+  //               <FormItem>
+  //                 <FormLabel>Details</FormLabel>
+  //                 <FormControl>
+  //                   <Input type="text" {...field} />
+  //                 </FormControl>
+  //                 <FormDescription />
+  //                 <FormMessage />
+  //               </FormItem>
+  //             )}
+  //           />
 
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input type="tel" {...field} />
-                  </FormControl>
-                  <FormDescription />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+  //           <FormField
+  //             control={form.control}
+  //             name="phone"
+  //             render={({ field }) => (
+  //               <FormItem>
+  //                 <FormLabel>Phone</FormLabel>
+  //                 <FormControl>
+  //                   <Input type="tel" {...field} />
+  //                 </FormControl>
+  //                 <FormDescription />
+  //                 <FormMessage />
+  //               </FormItem>
+  //             )}
+  //           />
 
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input type="text" {...field} />
-                  </FormControl>
-                  <FormDescription />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+  //           <FormField
+  //             control={form.control}
+  //             name="city"
+  //             render={({ field }) => (
+  //               <FormItem>
+  //                 <FormLabel>City</FormLabel>
+  //                 <FormControl>
+  //                   <Input type="text" {...field} />
+  //                 </FormControl>
+  //                 <FormDescription />
+  //                 <FormMessage />
+  //               </FormItem>
+  //             )}
+  //           />
 
            
 
-            <div className="flex justify-end mt-4">
-              <Button
-               onClick={form.handleSubmit(cashPayment)}
-                // type="submit" 
-                disabled={!form.formState.isValid || loading}
-                className={`w-35 h-12 border-2 flex items-center justify-center gap-2 ${form.formState.isValid && !loading
-                    ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
-                    : "bg-transparent text-gray-400 border-gray-400 cursor-not-allowed"
-                  }`}
-              >
-                {loading ? (
-                  <i className="fa-solid fa-spinner fa-spin"></i>
-                ) : (
-                  "Cash Payment"
-                )}
-              </Button>
-                   <Button
-                // type="button"
-                onClick={form.handleSubmit(onlinePayment)}
-                disabled={!form.formState.isValid || loading}
-                className={`w-35 h-12 border-2 flex items-center justify-center gap-2 ${form.formState.isValid && !loading
-                    ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
-                    : "bg-transparent text-gray-400 border-gray-400 cursor-not-allowed"
-                  }`}
-              >
-                {loading ? (
-                  <i className="fa-solid fa-spinner fa-spin"></i>
-                ) : (
-                  "Online Payment"
-                )}
-              </Button>
-            </div>
+  //           <div className="flex justify-end mt-4">
+  //             <Button
+  //              onClick={form.handleSubmit(cashPayment)}
+  //               // type="submit" 
+  //               disabled={!form.formState.isValid || loading}
+  //               className={`w-35 h-12 border-2 flex items-center justify-center gap-2 ${form.formState.isValid && !loading
+  //                   ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+  //                   : "bg-transparent text-gray-400 border-gray-400 cursor-not-allowed"
+  //                 }`}
+  //             >
+  //               {loading ? (
+  //                 <i className="fa-solid fa-spinner fa-spin"></i>
+  //               ) : (
+  //                 "Cash Payment"
+  //               )}
+  //             </Button>
+  //                  <Button
+  //               // type="button"
+  //               onClick={form.handleSubmit(onlinePayment)}
+  //               disabled={!form.formState.isValid || loading}
+  //               className={`w-35 h-12 border-2 flex items-center justify-center gap-2 ${form.formState.isValid && !loading
+  //                   ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+  //                   : "bg-transparent text-gray-400 border-gray-400 cursor-not-allowed"
+  //                 }`}
+  //             >
+  //               {loading ? (
+  //                 <i className="fa-solid fa-spinner fa-spin"></i>
+  //               ) : (
+  //                 "Online Payment"
+  //               )}
+  //             </Button>
+  //           </div>
 
-          </form>
-        </Form>
+  //         </form>
+  //       </Form>
+  //     </div>
+  //   </div>
+  // );
+  return (
+  <div className="relative mt-20">
+    {loading && (
+      <div className="fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm z-50">
+        <i className="fa-solid fa-spinner fa-spin fa-4x text-white"></i>
       </div>
+    )}
+
+    <div className="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 mt-10 border border-gray-100">
+      <h2 className="mb-8 font-bold text-3xl text-center text-gray-800">
+        Complete Your Order
+      </h2>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(cashPayment)} className="space-y-6">
+          {/* --- Details --- */}
+          <FormField
+            control={form.control}
+            name="details"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-medium text-gray-700">
+                  Address Details
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="e.g. Street 12, Building 5"
+                    className="border-gray-300 focus:ring-green-500 focus:border-green-500"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* --- Phone --- */}
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-medium text-gray-700">
+                  Phone Number
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    placeholder="+966 5xxxxxxxx"
+                    className="border-gray-300 focus:ring-green-500 focus:border-green-500"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* --- City --- */}
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-medium text-gray-700">City</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="e.g. Riyadh"
+                    className="border-gray-300 focus:ring-green-500 focus:border-green-500"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* --- Payment Method Selection --- */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">
+              Select Payment Method
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Cash */}
+              <div
+                onClick={() => setSelected("cash")}
+                className={`cursor-pointer border-2 rounded-xl p-5 flex flex-col items-center justify-center transition-all duration-200
+                ${selected === "cash"
+                    ? "border-green-500 bg-green-50 shadow-md"
+                    : "border-gray-200 hover:border-green-300 hover:bg-green-50/40"
+                  }`}
+              >
+                <i className="fa-solid fa-money-bill-wave text-3xl text-green-600 mb-2"></i>
+                <p className="font-semibold text-gray-700">Cash Payment</p>
+              </div>
+
+              {/* Online */}
+              <div
+                onClick={() => setSelected("online")}
+                className={`cursor-pointer border-2 rounded-xl p-5 flex flex-col items-center justify-center transition-all duration-200
+                ${selected === "online"
+                    ? "border-blue-500 bg-blue-50 shadow-md"
+                    : "border-gray-200 hover:border-blue-300 hover:bg-blue-50/40"
+                  }`}
+              >
+                <i className="fa-solid fa-credit-card text-3xl text-blue-600 mb-2"></i>
+                <p className="font-semibold text-gray-700">Online Payment</p>
+              </div>
+            </div>
+          </div>
+
+          {/* --- Confirm Button --- */}
+          <div className="mt-10">
+            <Button
+              type="button"
+              onClick={form.handleSubmit(async (values) => {
+                if (!selected) {
+                  toast.error("Please select a payment method", {
+                    duration: 3000,
+                    position: "top-center",
+                  });
+                  return;
+                }
+
+                if (selected === "cash") {
+                  await cashPayment(values);
+                } else {
+                  await onlinePayment(values);
+                }
+              })}
+              disabled={!form.formState.isValid || loading}
+              className={`w-full h-12 text-lg font-semibold rounded-xl transition-all
+                ${form.formState.isValid && !loading
+                  ? "bg-gradient-to-r from-green-500 to-blue-600 text-white hover:opacity-90 shadow-md hover:shadow-lg"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                }`}
+            >
+              {loading ? (
+                <i className="fa-solid fa-spinner fa-spin"></i>
+              ) : (
+                "Confirm Payment"
+              )}
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
-  );
+  </div>
+);
+
 }
 
 
